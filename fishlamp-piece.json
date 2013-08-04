@@ -1,0 +1,10 @@
+{	
+	"pieceName": "fishlamp-services",
+	"shortDescription" : "Service abstraction",
+	"url": "",
+	"createdBy": "Mike Fullerton",
+	"createdOn": "08/03/2013",
+	"contact": "hello@fishlamp.comp",
+	"importPaths": "Classes",
+	"dependsOn": "fishlamp-core"
+}
