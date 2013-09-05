@@ -88,7 +88,7 @@
 }
 
 - (void) _appWillBecomeActive:(id) sender {
-	if(!self.isServiceOpen && _willOpen) {
+	if(!self.isOpen && _willOpen) {
 // REFACTOR
 FLAssertFailedWithComment(@"refactor this");    
 //        [self _beginOpeningService];
@@ -164,11 +164,11 @@ FLAssertFailedWithComment(@"refactor this");
 	FLReleaseWithNil(_documentsDatabase);
 } 
  
-- (void) closeService
+- (void) closeSelf
 {
 	FLReleaseWithNil(_upgradeTaskList);
 	
-//    [self sendMessage:@"userServiceWillClose:"];
+//    [self performSelector:@"userServiceWillClose:"];
 
 //    id<FLProgressViewController> progress = nil;
     
@@ -178,12 +178,12 @@ FLAssertFailedWithComment(@"refactor this");
 //    }
 
 //    [self.backgroundTasks beginClosingService:^(FLFinisher* backgroundTaskMgr) {
-//        [self closeService];
+//        [self closeSelf];
 //        [progress hideProgress];
 //        [asyncTask setFinished];
 //    }];
     
-	if(self.isServiceOpen) {
+	if(self.isOpen) {
 		[[FLLowMemoryHandler defaultHandler] broadcastReleaseMessage];
 	}
 	 
@@ -205,7 +205,7 @@ FLAssertFailedWithComment(@"refactor this");
 		_open = NO;
 		_willOpen = NO;
 		_isOpening = NO;
-//        [self sendMessage:@"userServiceDidClose:"];
+//        [self performSelector:@"userServiceDidClose:"];
     }
 }
 
@@ -292,7 +292,7 @@ FLAssertFailedWithComment(@"refactor this");
 //    [self addAppService:_backgroundTasks];
 
 //    [self.backgroundTasks startOpeningService:^(id result) {
-//        [self sendMessage:@"userServiceDidOpen:"];
+//        [self performSelector:@"userServiceDidOpen:"];
 //    }];
 }
 
@@ -319,7 +319,7 @@ FLAssertFailedWithComment(@"refactor this");
             [_upgradeTaskList.operations queueOperation:[FLUpgradeDatabaseLengthyTask upgradeDatabaseLengthyTask:_documentsDatabase]];
         }
         
- //       [self sendMessage:@"userDataService:appVersionWillChange:" withObject:_upgradeTaskList];
+ //       [self performSelector:@"userDataService:appVersionWillChange:" withObject:_upgradeTaskList];
 
 /*        
         _upgradeTaskList.progressController = [[self class] createVersionUpgradeProgressViewController];
@@ -366,9 +366,9 @@ FLAssertFailedWithComment(@"TODO refactor this");
     return nil;
 }
 
-- (void) openService {
+- (void) openSelf {
 
-    [super openService];
+    [super openSelf];
     FLAssertWithComment(FLStringIsNotEmpty([self userLogin].userName), @"invalid userLogin");
     _willOpen = YES;
     _isOpening = NO;
